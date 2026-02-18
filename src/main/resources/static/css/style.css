@@ -14,6 +14,7 @@ body {
     padding: 60px 16px;
 }
 
+/* ── Card ── */
 .card {
     width: 100%;
     max-width: 680px;
@@ -156,4 +157,95 @@ small {
     margin-top: 6px;
     color: rgba(255, 255, 255, 0.3);
     font-size: 0.75rem;
+}
+
+/* ── Admin ── */
+.admin-area {
+    margin-top: 28px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.admin-btn {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.4);
+    font-size: 0.8rem;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: none;
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+}
+
+.admin-btn:hover {
+    color: rgba(255,255,255,0.8);
+    border-color: rgba(255,255,255,0.4);
+    transform: none;
+    opacity: 1;
+}
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(6px);
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+.modal {
+    background: #1a2a4a;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 18px;
+    padding: 36px;
+    width: 100%;
+    max-width: 360px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+
+.modal h3 {
+    font-family: 'Playfair Display', serif;
+    color: #fff;
+    font-size: 1.3rem;
+}
+
+.modal p {
+    color: rgba(255,255,255,0.5);
+    font-size: 0.9rem;
+}
+
+.danger-btn {
+    background: linear-gradient(135deg, #c62828, #b71c1c);
+    box-shadow: 0 4px 20px rgba(183,28,28,0.4);
+}
+
+.danger-btn:hover {
+    opacity: 0.9;
+}
+
+.cancel-btn {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.5);
+    font-size: 0.9rem;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: none;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+}
+
+.cancel-btn:hover {
+    color: #fff;
+    border-color: rgba(255,255,255,0.4);
+    transform: none;
+    opacity: 1;
 }

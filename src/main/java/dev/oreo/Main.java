@@ -41,6 +41,14 @@ public class Main {
         return "redirect:/";
     }
 
+    @PostMapping("/admin/clear")
+    public String clearDb(@RequestParam String code) {
+        if ("211".equals(code)) {
+            repo.deleteAll();
+        }
+        return "redirect:/";
+    }
+
     public static void main(String[] args) {
         SpringApplication.run(Main.class, args);
     }
