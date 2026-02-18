@@ -7,3 +7,6 @@ lang:
   message-placeholder: "Votre message"
   send-button: "Envoyer"
   no-messages: "Aucun message pour l'instant. Soyez le premier !"
+  admin:
+    code: "211"
+    wrongPassword: "Code admin incorrect."

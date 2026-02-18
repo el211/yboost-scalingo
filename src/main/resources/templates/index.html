@@ -55,13 +55,18 @@
 
 </div>
 
-<!-- Admin modal -->
 <div id="adminModal" class="modal-overlay" onclick="if(event.target===this)this.style.display='none'">
     <div class="modal">
         <h3>Admin</h3>
 
         <div th:if="${!isAdmin}">
             <p>Entrez le code admin pour activer les options.</p>
+
+            <div id="adminError"
+                 class="inline-error"
+                 style="display:none"
+                 th:text="${lang.admin.wrongPassword}">Code admin incorrect.</div>
+
             <input type="password" id="adminCodeField" placeholder="Code"/>
             <button class="danger-btn" onclick="activateAdmin()">Activer</button>
         </div>
@@ -86,6 +91,10 @@
 <script>
     async function activateAdmin() {
         const code = document.getElementById('adminCodeField').value;
+        const err = document.getElementById('adminError');
+
+        err.style.display = 'none';
+        err.textContent = err.textContent || 'Code admin incorrect.';
 
         const res = await fetch('/admin/login', {
             method: 'POST',
@@ -98,8 +107,16 @@
             return;
         }
 
-        alert('Code admin incorrect.');
+        document.getElementById('adminCodeField').value = '';
+        err.style.display = 'block';
     }
+
+    document.addEventListener('input', (e) => {
+        if (e.target && e.target.id === 'adminCodeField') {
+            const err = document.getElementById('adminError');
+            if (err) err.style.display = 'none';
+        }
+    });
 </script>
 
 </body>

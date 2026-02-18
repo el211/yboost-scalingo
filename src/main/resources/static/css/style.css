@@ -258,6 +258,18 @@ small {
     color: rgba(255,255,255,0.5);
     font-size: 0.9rem;
 }
+.inline-error{
+    margin-top: 6px;
+    padding: 12px 14px;
+    border-radius: 14px;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.92);
+    background: rgba(198, 40, 40, 0.16);
+    border: 1px solid rgba(183, 28, 28, 0.45);
+    box-shadow: 0 18px 50px rgba(0,0,0,0.45);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
 
 .danger-btn {
     background: linear-gradient(135deg, #c62828, #b71c1c);
