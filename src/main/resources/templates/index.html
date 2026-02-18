@@ -37,8 +37,10 @@
                 <div class="message-header">
                     <b th:text="${m.name}"></b>
                     <form class="delete-form" th:action="'/admin/delete/' + ${m.id}" method="post">
-                        <input type="hidden" name="code" class="admin-code-input" value=""/>
-                        <button type="submit" class="delete-btn" title="Supprimer">✕</button>
+                        <button type="submit"
+                                class="delete-btn"
+                                th:classappend="${isAdmin} ? ' visible' : ''"
+                                title="Supprimer">✕</button>
                     </form>
                 </div>
                 <span class="msg" th:text="${m.message}"></span>
@@ -57,30 +59,48 @@
 <div id="adminModal" class="modal-overlay" onclick="if(event.target===this)this.style.display='none'">
     <div class="modal">
         <h3>Admin</h3>
-        <p>Entrez le code admin pour activer les options.</p>
-        <input type="password" id="adminCodeField" placeholder="Code"/>
-        <button class="danger-btn" onclick="activateAdmin()">Activer</button>
-        <hr style="border-color: rgba(255,255,255,0.1)"/>
-        <p style="font-size:0.8rem; color:rgba(255,255,255,0.35)">Ou vider toute la base :</p>
-        <form method="post" action="/admin/clear">
-            <input type="hidden" name="code" id="clearCodeInput" value=""/>
-            <button type="submit" class="danger-btn" onclick="document.getElementById('clearCodeInput').value=document.getElementById('adminCodeField').value">Vider la DB</button>
-        </form>
-        <button class="cancel-btn" onclick="document.getElementById('adminModal').style.display='none'">Annuler</button>
+
+        <div th:if="${!isAdmin}">
+            <p>Entrez le code admin pour activer les options.</p>
+            <input type="password" id="adminCodeField" placeholder="Code"/>
+            <button class="danger-btn" onclick="activateAdmin()">Activer</button>
+        </div>
+
+        <div th:if="${isAdmin}">
+            <p style="opacity:0.9">Connecté en admin.</p>
+
+            <p style="font-size:0.8rem; color:rgba(255,255,255,0.35)">Vider toute la base :</p>
+            <form method="post" action="/admin/clear">
+                <button type="submit" class="danger-btn">Vider la DB</button>
+            </form>
+
+            <form method="post" action="/admin/logout" style="margin-top: 0.75rem">
+                <button type="submit" class="cancel-btn">Se déconnecter</button>
+            </form>
+        </div>
+
+        <button class="cancel-btn" onclick="document.getElementById('adminModal').style.display='none'">Fermer</button>
     </div>
 </div>
 
 <script>
-    function activateAdmin() {
+    async function activateAdmin() {
         const code = document.getElementById('adminCodeField').value;
-        document.querySelectorAll('.admin-code-input').forEach(input => input.value = code);
-        document.querySelectorAll('.delete-btn').forEach(btn => btn.classList.add('visible'));
-        document.getElementById('adminModal').style.display = 'none';
+
+        const res = await fetch('/admin/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({ code })
+        });
+
+        if (res.ok) {
+            window.location.reload();
+            return;
+        }
+
+        alert('Code admin incorrect.');
     }
 </script>
-
-</body>
-</html>
 
 </body>
 </html>
