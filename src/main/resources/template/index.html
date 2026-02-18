@@ -36,8 +36,7 @@
             <li th:each="m : ${messages}">
                 <b th:text="${m.name}"></b>
                 <span class="msg" th:text="${m.message}"></span>
-                <small th:text="${m.createdAt}"></small>
-            </li>
+                <small th:text="${m.createdAtFormatted}"></small>            </li>
         </ul>
     </section>
 
