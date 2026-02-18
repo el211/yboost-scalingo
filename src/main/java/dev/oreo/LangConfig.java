@@ -7,14 +7,14 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "lang")
 public class LangConfig {
 
-    private String pageTitle = "Guestbook";
-    private String heading = "Guestbook";
-    private String subtitle = "Leave a message for the world to see.";
-    private String formHeading = "Write a message";
-    private String namePlaceholder = "Your name";
-    private String messagePlaceholder = "Your message";
-    private String sendButton = "Send Message";
-    private String noMessages = "No messages yet. Be the first!";
+    private String pageTitle = "Livre d'or";
+    private String heading = "Livre d'or";
+    private String subtitle = "Laissez un message pour le monde entier.";
+    private String formHeading = "Écrire un message";
+    private String namePlaceholder = "Votre nom";
+    private String messagePlaceholder = "Votre message";
+    private String sendButton = "Envoyer";
+    private String noMessages = "Aucun message pour l'instant. Soyez le premier !";
 
     public String getPageTitle() { return pageTitle; }
     public String getHeading() { return heading; }
