@@ -36,13 +36,24 @@
             <li th:each="m : ${messages}">
                 <div class="message-header">
                     <b th:text="${m.name}"></b>
-                    <form class="delete-form" th:action="'/admin/delete/' + ${m.id}" method="post">
-                        <button type="submit"
-                                class="delete-btn"
+
+                    <div class="admin-actions">
+                        <button type="button"
+                                class="edit-btn"
                                 th:classappend="${isAdmin} ? ' visible' : ''"
-                                title="Supprimer">✕</button>
-                    </form>
+                                th:attr="data-id=${m.id},data-message=${m.message}"
+                                onclick="openEditModal(this)"
+                                title="Modifier">✎</button>
+
+                        <form class="delete-form" th:action="'/admin/delete/' + ${m.id}" method="post">
+                            <button type="submit"
+                                    class="delete-btn"
+                                    th:classappend="${isAdmin} ? ' visible' : ''"
+                                    title="Supprimer">✕</button>
+                        </form>
+                    </div>
                 </div>
+
                 <span class="msg" th:text="${m.message}"></span>
                 <small th:text="${m.createdAtFormatted}"></small>
             </li>
@@ -88,6 +99,22 @@
     </div>
 </div>
 
+<div id="editModal" class="modal-overlay" style="display:none" onclick="if(event.target===this)closeEditModal()">
+    <div class="modal">
+        <h3>Modifier le message</h3>
+
+        <div id="editError" class="inline-error" style="display:none">Erreur.</div>
+
+        <input type="hidden" id="editMessageId" value=""/>
+        <textarea id="editMessageField" class="modal-textarea" rows="4" placeholder="Nouveau message..."></textarea>
+
+        <div class="edit-actions">
+            <button class="danger-btn" onclick="saveEdit()">Sauvegarder</button>
+            <button class="cancel-btn" onclick="closeEditModal()">Annuler</button>
+        </div>
+    </div>
+</div>
+
 <script>
     async function activateAdmin() {
         const code = document.getElementById('adminCodeField').value;
@@ -117,6 +144,46 @@
             if (err) err.style.display = 'none';
         }
     });
+
+    function openEditModal(btn) {
+        const id = btn.dataset.id;
+        const msg = btn.dataset.message || '';
+
+        document.getElementById('editMessageId').value = id;
+        document.getElementById('editMessageField').value = msg;
+
+        const err = document.getElementById('editError');
+        err.style.display = 'none';
+
+        document.getElementById('editModal').style.display = 'flex';
+        setTimeout(() => document.getElementById('editMessageField').focus(), 0);
+    }
+
+    function closeEditModal() {
+        document.getElementById('editModal').style.display = 'none';
+    }
+
+    async function saveEdit() {
+        const id = document.getElementById('editMessageId').value;
+        const message = document.getElementById('editMessageField').value;
+
+        const err = document.getElementById('editError');
+        err.style.display = 'none';
+
+        const res = await fetch('/admin/update/' + encodeURIComponent(id), {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({ message })
+        });
+
+        if (res.ok) {
+            window.location.reload();
+            return;
+        }
+
+        err.textContent = 'Impossible de sauvegarder. (Pas admin / erreur serveur)';
+        err.style.display = 'block';
+    }
 </script>
 
 </body>

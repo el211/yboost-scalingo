@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootApplication
 @EnableConfigurationProperties
@@ -108,6 +109,31 @@ public class Main {
             log.warn("Admin action blocked: DELETE_MESSAGE id={}", id);
         }
         return "redirect:/";
+    }
+
+    @PostMapping("/admin/update/{id}")
+    public ResponseEntity<Void> updateMessage(
+            @PathVariable String id,
+            @RequestParam String message,
+            HttpSession session
+    ) {
+        if (!Boolean.TRUE.equals(session.getAttribute("isAdmin"))) {
+            log.warn("Admin action blocked: UPDATE_MESSAGE id={}", id);
+            return ResponseEntity.status(401).build();
+        }
+
+        Optional<GuestMessage> opt = repo.findById(id);
+        if (opt.isEmpty()) {
+            log.warn("Admin action: UPDATE_MESSAGE_NOT_FOUND id={}", id);
+            return ResponseEntity.notFound().build();
+        }
+
+        GuestMessage m = opt.get();
+        m.setMessage(message);
+        repo.save(m);
+
+        log.warn("Admin action: UPDATE_MESSAGE id={}", id);
+        return ResponseEntity.noContent().build();
     }
 
     public static void main(String[] args) {
