@@ -1,11 +1,10 @@
 package dev.oreo;
 
+import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
-
-import jakarta.annotation.PostConstruct;
 
 @Component
 @ConfigurationProperties(prefix = "lang")
@@ -56,14 +55,12 @@ public class LangConfig {
     public void setAdmin(Admin admin) { this.admin = admin; }
 
     @PostConstruct
-    public void logLoadedConfig() {
-        log.info("LangConfig loaded (YAML/properties binding OK): pageTitle='{}', heading='{}'", pageTitle, heading);
+    public void trace() {
+        log.info("LangConfig trace: pageTitle='{}', formHeading='{}'", pageTitle, formHeading);
 
-        boolean hasAdminCode = admin != null && admin.getCode() != null && !admin.getCode().isBlank();
-        String wrongPwd = (admin != null ? admin.getWrongPassword() : null);
+        boolean codePresent = admin != null && admin.getCode() != null && !admin.getCode().isBlank();
+        boolean wrongPwdPresent = admin != null && admin.getWrongPassword() != null && !admin.getWrongPassword().isBlank();
 
-        log.info("Admin config loaded: codePresent={}, wrongPasswordMsgPresent={}",
-                hasAdminCode,
-                wrongPwd != null && !wrongPwd.isBlank());
+        log.info("LangConfig trace: admin.codePresent={}, admin.wrongPasswordPresent={}", codePresent, wrongPwdPresent);
     }
 }
