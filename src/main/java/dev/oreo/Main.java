@@ -28,4 +28,10 @@ public class Main {
     public static void main(String[] args) {
         SpringApplication.run(Main.class, args);
     }
+    @GetMapping("/mongo-uri")
+    public String mongoUri() {
+        return System.getenv().getOrDefault("SPRING_DATA_MONGODB_URI",
+                System.getenv().getOrDefault("SCALINGO_MONGO_URL", "no mongo env var"));
+    }
+
 }
