@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Guestbook</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+
+<div class="card">
+
+    <header>
+        <h1>Guestbook</h1>
+        <p class="subtitle">Leave a message for the world to see.</p>
+    </header>
+
+    <section class="form-section">
+        <h2>Write a message</h2>
+        <form method="post" action="/guestbook">
+            <input name="name" placeholder="Your name" required/>
+            <input name="message" placeholder="Your message" required/>
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
+
+    <hr/>
+
+    <section class="messages-section">
+        <div th:if="${#lists.isEmpty(messages)}" class="empty">
+            No messages yet. Be the first!
+        </div>
+
+        <ul th:unless="${#lists.isEmpty(messages)}">
+            <li th:each="m : ${messages}">
+                <b th:text="${m.name}"></b>
+                <span class="msg" th:text="${m.message}"></span>
+                <small th:text="${m.createdAt}"></small>
+            </li>
+        </ul>
+    </section>
+
+</div>
+
+</body>
+</html>
