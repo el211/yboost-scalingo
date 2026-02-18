@@ -49,6 +49,14 @@ public class Main {
         return "redirect:/";
     }
 
+    @PostMapping("/admin/delete/{id}")
+    public String deleteMessage(@PathVariable String id, @RequestParam String code) {
+        if ("211".equals(code)) {
+            repo.deleteById(id);
+        }
+        return "redirect:/";
+    }
+
     public static void main(String[] args) {
         SpringApplication.run(Main.class, args);
     }

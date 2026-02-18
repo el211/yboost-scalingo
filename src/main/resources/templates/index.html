@@ -34,7 +34,13 @@
 
         <ul th:unless="${#lists.isEmpty(messages)}">
             <li th:each="m : ${messages}">
-                <b th:text="${m.name}"></b>
+                <div class="message-header">
+                    <b th:text="${m.name}"></b>
+                    <form class="delete-form" th:action="'/admin/delete/' + ${m.id}" method="post">
+                        <input type="hidden" name="code" class="admin-code-input" value=""/>
+                        <button type="submit" class="delete-btn" title="Supprimer">✕</button>
+                    </form>
+                </div>
                 <span class="msg" th:text="${m.message}"></span>
                 <small th:text="${m.createdAtFormatted}"></small>
             </li>
@@ -47,17 +53,34 @@
 
 </div>
 
+<!-- Admin modal -->
 <div id="adminModal" class="modal-overlay" onclick="if(event.target===this)this.style.display='none'">
     <div class="modal">
         <h3>Admin</h3>
-        <p>Entrez le code pour vider la base de données.</p>
+        <p>Entrez le code admin pour activer les options.</p>
+        <input type="password" id="adminCodeField" placeholder="Code"/>
+        <button class="danger-btn" onclick="activateAdmin()">Activer</button>
+        <hr style="border-color: rgba(255,255,255,0.1)"/>
+        <p style="font-size:0.8rem; color:rgba(255,255,255,0.35)">Ou vider toute la base :</p>
         <form method="post" action="/admin/clear">
-            <input type="password" name="code" placeholder="Code" required/>
-            <button type="submit" class="danger-btn">Vider la DB</button>
+            <input type="hidden" name="code" id="clearCodeInput" value=""/>
+            <button type="submit" class="danger-btn" onclick="document.getElementById('clearCodeInput').value=document.getElementById('adminCodeField').value">Vider la DB</button>
         </form>
         <button class="cancel-btn" onclick="document.getElementById('adminModal').style.display='none'">Annuler</button>
     </div>
 </div>
+
+<script>
+    function activateAdmin() {
+        const code = document.getElementById('adminCodeField').value;
+        document.querySelectorAll('.admin-code-input').forEach(input => input.value = code);
+        document.querySelectorAll('.delete-btn').forEach(btn => btn.classList.add('visible'));
+        document.getElementById('adminModal').style.display = 'none';
+    }
+</script>
+
+</body>
+</html>
 
 </body>
 </html>

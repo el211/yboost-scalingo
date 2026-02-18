@@ -48,7 +48,6 @@ h1 {
     margin-bottom: 36px;
 }
 
-/* ── Section titles ── */
 h2 {
     font-family: 'Playfair Display', serif;
     font-size: 1.3rem;
@@ -56,7 +55,6 @@ h2 {
     margin-bottom: 18px;
 }
 
-/* ── Form ── */
 .form-section {
     margin-bottom: 36px;
 }
@@ -158,6 +156,42 @@ small {
     margin-top: 6px;
     color: rgba(255, 255, 255, 0.3);
     font-size: 0.75rem;
+}
+
+.message-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.delete-form {
+    margin: 0;
+}
+
+.delete-btn {
+    display: none;
+    background: rgba(183, 28, 28, 0.3);
+    border: 1px solid rgba(183, 28, 28, 0.5);
+    color: #ef9a9a;
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: none;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+    min-width: unset;
+}
+
+.delete-btn.visible {
+    display: inline-block;
+}
+
+.delete-btn:hover {
+    background: rgba(183, 28, 28, 0.6);
+    transform: none;
+    opacity: 1;
 }
 
 .admin-area {
