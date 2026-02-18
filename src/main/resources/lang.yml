@@ -2,7 +2,7 @@ lang:
   page-title: "Livre d'or"
   heading: "Livre d'or"
   subtitle: "Laissez un message pour le monde entier."
-  form-heading: "Écrire un messageDFF"
+  form-heading: "Écrire un message:"
   name-placeholder: "Votre nom"
   message-placeholder: "Votre message"
   send-button: "Envoyer"
