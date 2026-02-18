@@ -2,6 +2,7 @@ package dev.oreo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,13 +11,16 @@ import java.util.Comparator;
 import java.util.List;
 
 @SpringBootApplication
+@EnableConfigurationProperties
 @Controller
 public class Main {
 
     private final GuestMessageRepo repo;
+    private final LangConfig lang;
 
-    public Main(GuestMessageRepo repo) {
+    public Main(GuestMessageRepo repo, LangConfig lang) {
         this.repo = repo;
+        this.lang = lang;
     }
 
     @GetMapping("/")
@@ -27,6 +31,7 @@ public class Main {
                 .toList();
 
         model.addAttribute("messages", messages);
+        model.addAttribute("lang", lang);
         return "index";
     }
 

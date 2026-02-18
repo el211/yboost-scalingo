@@ -27,11 +27,12 @@ public class GuestMessage {
     public String getMessage() { return message; }
     public Instant getCreatedAt() { return createdAt; }
 
-    public void setId(String id) { this.id = id; }
-    public void setName(String name) { this.name = name; }
-    public void setMessage(String message) { this.message = message; }
     public String getCreatedAtFormatted() {
         return createdAt.toString().replace("T", " ").substring(0, 19) + " UTC";
     }
+
+    public void setId(String id) { this.id = id; }
+    public void setName(String name) { this.name = name; }
+    public void setMessage(String message) { this.message = message; }
     public void setCreatedAt(Instant createdAt) { this.createdAt = createdAt; }
 }

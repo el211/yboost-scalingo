@@ -14,7 +14,6 @@ body {
     padding: 60px 16px;
 }
 
-/* ── Card ── */
 .card {
     width: 100%;
     max-width: 680px;
@@ -34,7 +33,6 @@ body {
     to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ── Header ── */
 h1 {
     font-family: 'Playfair Display', serif;
     font-size: 2.6rem;
@@ -50,7 +48,6 @@ h1 {
     margin-bottom: 36px;
 }
 
-/* ── Section titles ── */
 h2 {
     font-family: 'Playfair Display', serif;
     font-size: 1.3rem;
@@ -58,7 +55,6 @@ h2 {
     margin-bottom: 18px;
 }
 
-/* ── Form ── */
 .form-section {
     margin-bottom: 36px;
 }
@@ -115,14 +111,12 @@ button:active {
     transform: translateY(0);
 }
 
-/* ── Divider ── */
 hr {
     border: none;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     margin-bottom: 28px;
 }
 
-/* ── Messages ── */
 .empty {
     color: rgba(255, 255, 255, 0.4);
     font-style: italic;
