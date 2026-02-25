@@ -9,9 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "lang")
 public class LangConfig {
-
     private static final Logger log = LoggerFactory.getLogger(LangConfig.class);
-
     private String pageTitle = "Livre d'or";
     private String heading = "Livre d'or";
     private String subtitle = "Laissez un message pour le monde entier.";
@@ -20,7 +18,6 @@ public class LangConfig {
     private String messagePlaceholder = "Votre message";
     private String sendButton = "Envoyer";
     private String noMessages = "Aucun message pour l'instant. Soyez le premier !";
-
     private Admin admin = new Admin();
 
     public static class Admin {
@@ -43,7 +40,6 @@ public class LangConfig {
     public String getSendButton() { return sendButton; }
     public String getNoMessages() { return noMessages; }
     public Admin getAdmin() { return admin; }
-
     public void setPageTitle(String pageTitle) { this.pageTitle = pageTitle; }
     public void setHeading(String heading) { this.heading = heading; }
     public void setSubtitle(String subtitle) { this.subtitle = subtitle; }

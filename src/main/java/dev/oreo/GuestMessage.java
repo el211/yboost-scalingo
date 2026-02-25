@@ -11,7 +11,9 @@ public class GuestMessage {
     private String id;
 
     private String name;
+
     private String message;
+
     private Instant createdAt = Instant.now();
 
     public GuestMessage() {}
