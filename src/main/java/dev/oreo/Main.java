@@ -27,6 +27,7 @@ public class Main {
     private static final String ANSI_RESET = "\u001B[0m";
     private static final String ANSI_BOLD_RED = "\u001B[1;31m";
     private static final String ANSI_BOLD_YELLOW = "\u001B[1;33m";
+    private static final String ANSI_BOLD_LIGHT_GREEN = "\u001B[1;92m";
 
     private final GuestMessageRepo repo;
     private final LangConfig lang;
@@ -44,6 +45,10 @@ public class Main {
         return ANSI_BOLD_YELLOW + msg + ANSI_RESET;
     }
 
+    private static String greenBold(String msg) {
+        return ANSI_BOLD_LIGHT_GREEN + msg + ANSI_RESET;
+    }
+
     private void logUserAction(String template, Object... args) {
         log.info(redBold("[USER] " + template), args);
     }
@@ -56,6 +61,14 @@ public class Main {
         log.warn(yellowBold("[ADMIN BLOCKED] " + template), args);
     }
 
+    private void logSystemOk(String template, Object... args) {
+        log.info(greenBold("[SYSTEM] " + template), args);
+    }
+
+    private void logSystemFail(String template, Object... args) {
+        log.error(redBold("[SYSTEM] " + template), args);
+    }
+
     private static String clientIp(HttpServletRequest request) {
         String forwarded = request.getHeader("X-Forwarded-For");
         if (forwarded != null && !forwarded.isBlank()) {
@@ -66,16 +79,22 @@ public class Main {
 
     @PostConstruct
     public void bootTraces() {
-        log.info(redBold("=== APP BOOT ==="));
-        log.info("App boot: starting checks...");
+        logSystemOk("=== APP BOOT ===");
+        logSystemOk("App boot: starting checks...");
+
         String adminCode = lang.getAdmin() != null ? lang.getAdmin().getCode() : null;
-        log.info("Admin code configured: {}", adminCode != null && !adminCode.isBlank());
+        logSystemOk("Admin code configured: {}", adminCode != null && !adminCode.isBlank());
+
+        String pageTitle = lang.getPageTitle();
+        String formHeading = lang.getFormHeading();
+        boolean hasLangValues = pageTitle != null && !pageTitle.isBlank() && formHeading != null && !formHeading.isBlank();
+        logSystemOk("LangConfig loaded: {}", hasLangValues);
 
         try {
             long count = repo.count();
-            log.info("Connected to MongoDB: OK (guest_messages_count={})", count);
+            logSystemOk("Connected to MongoDB: OK (guest_messages_count={})", count);
         } catch (Exception e) {
-            log.error("Connected to MongoDB: FAIL ({})", e.getMessage());
+            logSystemFail("Connected to MongoDB: FAIL ({})", e.getMessage());
         }
     }
 
